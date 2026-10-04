@@ -19,21 +19,22 @@ public class Config {
     private LocalTime bedtime;
     private LocalTime wakeup;
     private String INTERFACE_TYPE; // or "eth0", "wlan0", etc. // Wi-Fi, Ethernet
+    private String disabledInterface;
     private String countdownMessage;
     private LocalDate countdownEnd;
 
-    public Config(boolean autoStart, LocalTime bedtime, LocalTime wakeup, String INTERFACE_TYPE, String countdownMessage, LocalDate countdownEnd) {
+    public Config(boolean autoStart, LocalTime bedtime, LocalTime wakeup, String INTERFACE_TYPE, String disabledInterface, String countdownMessage, LocalDate countdownEnd) {
         this.autoStart = autoStart;
         this.bedtime = bedtime;
         this.wakeup = wakeup;
         this.INTERFACE_TYPE = INTERFACE_TYPE;
+        this.disabledInterface = disabledInterface;
         this.countdownMessage = countdownMessage;
         this.countdownEnd = countdownEnd;
     }
 
-    public void setAutoStart(boolean autoStart) {
-        this.autoStart = autoStart;
-    }
+    // Setters
+    public void setAutoStart(boolean autoStart) { this.autoStart = autoStart; }
 
     public void setBedtime(LocalTime bedtime) {
         this.bedtime = bedtime;
@@ -47,6 +48,8 @@ public class Config {
         this.INTERFACE_TYPE = INTERFACE_TYPE;
     }
 
+    public void setDisabledInterface(String disabledInterface) { this.disabledInterface = disabledInterface; }
+
     public void setCountdownEnd(LocalDate countdownEnd) {
         this.countdownEnd = countdownEnd;
     }
@@ -55,9 +58,8 @@ public class Config {
         this.countdownMessage = countdownMessage;
     }
 
-    public boolean isAutoStart() {
-        return autoStart;
-    }
+    // Getters
+    public boolean isAutoStart() { return autoStart; }
 
     public LocalTime getBedtime() {
         return bedtime;
@@ -71,6 +73,8 @@ public class Config {
         return INTERFACE_TYPE;
     }
 
+    public String getDisabledInterface() { return disabledInterface; }
+
     public LocalDate getCountdownEnd() {
         return countdownEnd;
     }
@@ -81,7 +85,7 @@ public class Config {
 
     @Override
     public String toString() {
-        return "AutoStart: " + autoStart + " bedtime: " + bedtime + " wakeup: " + wakeup + " INTERFACE_TYPE: " + INTERFACE_TYPE + " countdownMessage: " + countdownMessage + " countdownEnd: " + countdownEnd;
+        return "AutoStart: " + autoStart + " bedtime: " + bedtime + " wakeup: " + wakeup + " INTERFACE_TYPE: " + INTERFACE_TYPE + "disabledInterface: " + disabledInterface + " countdownMessage: " + countdownMessage + " countdownEnd: " + countdownEnd;
     }
 
     public static String configFile = "config.json";
@@ -114,6 +118,7 @@ public class Config {
             LocalTime.of(23, 30),
             LocalTime.of(9, 0),
             "Ethernet",
+            "",
             "Black Friday",
             LocalDate.of(2026,11,27)
     );

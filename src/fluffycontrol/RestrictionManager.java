@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import static fluffycontrol.FluffyControl.username;
 
 public class RestrictionManager {
-    private static boolean isNight = false;
+    public static boolean isNight = false;
 
     public static ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
@@ -44,7 +44,7 @@ public class RestrictionManager {
     }
 
     // TimerCheck Helper
-    private static boolean isBetween(LocalTime now, LocalTime start, LocalTime end) {
+    public static boolean isBetween(LocalTime now, LocalTime start, LocalTime end) {
         return !now.isBefore(start) && !now.isAfter(end);
     }
 }

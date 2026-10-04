@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.15.1]
+### Fixed
+- The network that was disabled is now enabled once wake-up time is reached
+
 ## [0.15.0]
 
 ### Added

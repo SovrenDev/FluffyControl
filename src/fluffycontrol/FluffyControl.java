@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalTime;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -16,7 +18,7 @@ import javax.swing.*;
  */
 public class FluffyControl {
     public static String username = System.getProperty("user.name");   
-    public static String version = "0.15.0-Linux";
+    public static String version = "0.15.1-Linux";
     public static boolean running = true;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -50,6 +52,16 @@ public class FluffyControl {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonOutput = gson.toJson(Config.defaultConfig);
         Config.doesConfigExist(jsonOutput);
+
+        Config loadedConfig = Config.loadFile(gson, new File(Config.configFile),false);
+        LocalTime bedtime = loadedConfig.getBedtime();
+        LocalTime wakeUpTime = loadedConfig.getWakeup();
+
+        // Makes sure internet is reconnected on launch if it's daytime
+        if(!RestrictionManager.isNight && RestrictionManager.isBetween(LocalTime.now(), wakeUpTime, bedtime)){
+            System.out.printf("%s%s%nisNight set to true%s%n", LogColors.BLUE,LogColors.BOLD,LogColors.RESET);
+            RestrictionManager.isNight = true;
+        }
 
         System.out.printf(LogColors.PURPLE + LogColors.BOLD + "Welcome to Fluffy Control version %s, %s!%n",version, username + LogColors.RESET);
         // GUI Setup

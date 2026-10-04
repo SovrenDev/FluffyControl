@@ -10,13 +10,11 @@ import java.util.Collections;
 import java.util.Enumeration;
 
 public class NetworkController {
-    public static void turnOffNetwork(Gson gson) {
-        runCommand("nmcli", "device", "disconnect", getInterface(gson));
+    public static void turnOffNetwork(Gson gson) { runCommand("nmcli", "device", "disconnect", getInterface(gson));
     }
 
-    public static void turnOnNetwork(Gson gson) {
-        runCommand("nmcli", "device", "connect", getInterface(gson));
-    }
+    public static void turnOnNetwork(Gson gson) { runCommand("nmcli", "device", "connect", getDisabledInterface(gson));
+    } // Load name from config which is temporarily saved when connection is cut
 
     public static void runCommand(String... command){
         try {
@@ -55,11 +53,19 @@ public class NetworkController {
                 if(type != null && type.equalsIgnoreCase("ethernet")){
                     if (name.startsWith("en") || name.startsWith("eth")) {
                         System.out.printf("%s%s%nEthernet: %s%n%s",LogColors.BLUE, LogColors.BOLD, name, LogColors.RESET);
+                        // Save to file
+                        loadedConfig.setDisabledInterface(name);
+                        String jsonOutput = gson.toJson(loadedConfig);
+                        Config.writeToFile(new File(Config.configFile), jsonOutput);
                         return name;
                     }
                 } else if(type != null && type.equalsIgnoreCase("wi-fi")){
                    if (name.startsWith("wl")) {
                        System.out.printf("%s%s%nWi-Fi: %s%n%s",LogColors.BLUE, LogColors.BOLD, name, LogColors.RESET);
+                       // Save to file
+                       loadedConfig.setDisabledInterface(name);
+                       String jsonOutput = gson.toJson(loadedConfig);
+                       Config.writeToFile(new File(Config.configFile), jsonOutput);
                        return name;
                    }
                 } else {
@@ -71,5 +77,12 @@ public class NetworkController {
         }
         // Fallback
         return null;
+    }
+
+    public static String getDisabledInterface(Gson gson){
+        Config loadedConfig = Config.loadFile(gson, new File(Config.configFile), false);
+        String name = loadedConfig.getDisabledInterface();
+        if(name == null) System.out.printf("%s%s%n[WARN] Disabled Interface is null %s%n",LogColors.YELLOW, LogColors.BOLD,  LogColors.RESET);
+        return name;
     }
 }
