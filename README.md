@@ -23,10 +23,10 @@ By default, the program enforces the following schedule:
 
 ## Configuration
 
-Once started, make sure to set your correct network interface name in the config tab or manually in config.json:
+Once started, make sure to set your correct network interface type in the config tab or manually in config.json:
 ```json
 {
-  "INTERFACE_NAME": "enp14s0"
+  "INTERFACE_TYPE": "WiFi"
 }
 ```
 *You can find your active network interface name by running `nmcli device` in your terminal.*

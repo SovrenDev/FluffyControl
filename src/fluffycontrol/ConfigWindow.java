@@ -176,19 +176,18 @@ public class ConfigWindow extends JFrame{
         });
 
         // Interface config
-        JLabel interfaceNameLabel = createLabel("    Network interface:");
-        String[] interfaceName = {"enp14s0", "eth0", "wlan0", "wlp15s0"};
-        JList<String> interfaceNameList= new JList<>(interfaceName);
-        interfaceNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        interfaceNameList.setSelectedValue(loadedConfig.getINTERFACE_NAME(), true); // pre-selects the last selection
+        JLabel interfaceTypeLabel = createLabel("    Network interface:");
+        String[] check = {"Ethernet", "Wi-Fi"};
+        JList<String> interfaceTypeList = new JList<>(check);
+        interfaceTypeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        interfaceTypeList.setSelectedValue(loadedConfig.getINTERFACE_TYPE(), true); // pre-selects the last selection
 
-        interfaceNameList.addListSelectionListener(e -> {
+        interfaceTypeList.addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()){
-                String strInterfaceName = interfaceNameList.getSelectedValue();
-                if(strInterfaceName != null) {
-                    System.out.println(LogColors.BLUE + LogColors.BOLD + "Selected Interface: " + strInterfaceName + LogColors.RESET);
-                    NetworkController.INTERFACE_NAME = strInterfaceName; // Change the network interfaced used
-                    loadedConfig.setINTERFACE_NAME(strInterfaceName); // Temp save
+                String strInterfaceType = interfaceTypeList.getSelectedValue();
+                if(strInterfaceType != null) {
+                    System.out.printf("%s%s%nSelected Interface: %s %s%n",LogColors.BLUE, LogColors.BOLD, strInterfaceType, LogColors.RESET);
+                    loadedConfig.setINTERFACE_TYPE(strInterfaceType); // Temp save
                 }
             }
         });
@@ -229,8 +228,8 @@ public class ConfigWindow extends JFrame{
         formGroup.add(bedtimeField);
         formGroup.add(wakeupLabel);
         formGroup.add(wakeupField);
-        formGroup.add(interfaceNameLabel);
-        formGroup.add(interfaceNameList);
+        formGroup.add(interfaceTypeLabel);
+        formGroup.add(interfaceTypeList);
         formGroup.add(countdownMessageLabel);
         formGroup.add(countdownMessageField);
         formGroup.add(countdownLabel);

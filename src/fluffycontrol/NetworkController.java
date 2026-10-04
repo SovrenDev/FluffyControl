@@ -4,9 +4,12 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
-public class NetworkController {
-    public static String INTERFACE_NAME = "enp14s0"; // or "eth0", "wlan0", "wlp15s0", etc.
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
 
+public class NetworkController {
     public static void turnOffNetwork(Gson gson) {
         runCommand("nmcli", "device", "disconnect", getInterface(gson));
     }
@@ -22,7 +25,7 @@ public class NetworkController {
             int exitCode = process.waitFor();
 
             if (exitCode == 0) {
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Network Command successful." + LogColors.RESET);
+                System.out.printf("%s%s%nNetwork Command successful.%s%n",LogColors.BLUE, LogColors.BOLD, LogColors.RESET);
                 return;
             }
 
@@ -37,7 +40,36 @@ public class NetworkController {
     }
 
     public static String getInterface(Gson gson) {
-        Config loadedConfig = Config.loadFile(gson, new File(Config.configFile), false);
-        return loadedConfig.getINTERFACE_NAME();
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            for (NetworkInterface ni : Collections.list(interfaces)) {
+                // Skip loopback, virtual, or inactive interfaces
+                if (ni.isLoopback() || !ni.isUp()) {
+                    continue;
+                }
+
+                String name = ni.getName();
+                // Target Ethernet or Wi-Fi interface prefixes
+                Config loadedConfig = Config.loadFile(gson, new File(Config.configFile), false);
+                String type = loadedConfig.getINTERFACE_TYPE();
+                if(type != null && type.equalsIgnoreCase("ethernet")){
+                    if (name.startsWith("en") || name.startsWith("eth")) {
+                        System.out.printf("%s%s%nEthernet: %s%n%s",LogColors.BLUE, LogColors.BOLD, name, LogColors.RESET);
+                        return name;
+                    }
+                } else if(type != null && type.equalsIgnoreCase("wi-fi")){
+                   if (name.startsWith("wl")) {
+                       System.out.printf("%s%s%nWi-Fi: %s%n%s",LogColors.BLUE, LogColors.BOLD, name, LogColors.RESET);
+                       return name;
+                   }
+                } else {
+                    System.out.printf("%s%s%n[WARN] %s is not a valid type. Please enter Wi-Fi or Ethernet%n%s",LogColors.YELLOW, LogColors.BOLD, type,  LogColors.RESET);
+                }
+            }
+        } catch (SocketException e) {
+            System.err.println("Failed to detect network interface: " + e.getMessage());
+        }
+        // Fallback
+        return null;
     }
 }

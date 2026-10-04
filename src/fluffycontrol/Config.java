@@ -18,15 +18,15 @@ public class Config {
     private boolean autoStart;
     private LocalTime bedtime;
     private LocalTime wakeup;
-    private String INTERFACE_NAME; // or "eth0", "wlan0", etc. // Wi-Fi, Ethernet
+    private String INTERFACE_TYPE; // or "eth0", "wlan0", etc. // Wi-Fi, Ethernet
     private String countdownMessage;
     private LocalDate countdownEnd;
 
-    public Config(boolean autoStart, LocalTime bedtime, LocalTime wakeup, String INTERFACE_NAME, String countdownMessage, LocalDate countdownEnd) {
+    public Config(boolean autoStart, LocalTime bedtime, LocalTime wakeup, String INTERFACE_TYPE, String countdownMessage, LocalDate countdownEnd) {
         this.autoStart = autoStart;
         this.bedtime = bedtime;
         this.wakeup = wakeup;
-        this.INTERFACE_NAME = INTERFACE_NAME;
+        this.INTERFACE_TYPE = INTERFACE_TYPE;
         this.countdownMessage = countdownMessage;
         this.countdownEnd = countdownEnd;
     }
@@ -43,8 +43,8 @@ public class Config {
         this.wakeup = wakeup;
     }
 
-    public void setINTERFACE_NAME(String INTERFACE_NAME) {
-        this.INTERFACE_NAME = INTERFACE_NAME;
+    public void setINTERFACE_TYPE(String INTERFACE_TYPE) {
+        this.INTERFACE_TYPE = INTERFACE_TYPE;
     }
 
     public void setCountdownEnd(LocalDate countdownEnd) {
@@ -67,8 +67,8 @@ public class Config {
         return wakeup;
     }
 
-    public String getINTERFACE_NAME() {
-        return INTERFACE_NAME;
+    public String getINTERFACE_TYPE() {
+        return INTERFACE_TYPE;
     }
 
     public LocalDate getCountdownEnd() {
@@ -81,7 +81,7 @@ public class Config {
 
     @Override
     public String toString() {
-        return "AutoStart: " + autoStart + " bedtime: " + bedtime + " wakeup: " + wakeup + " INTERFACE_NAME: " + INTERFACE_NAME + " countdownMessage: " + countdownMessage + " countdownEnd: " + countdownEnd;
+        return "AutoStart: " + autoStart + " bedtime: " + bedtime + " wakeup: " + wakeup + " INTERFACE_TYPE: " + INTERFACE_TYPE + " countdownMessage: " + countdownMessage + " countdownEnd: " + countdownEnd;
     }
 
     public static String configFile = "config.json";
@@ -113,7 +113,7 @@ public class Config {
             false,
             LocalTime.of(23, 30),
             LocalTime.of(9, 0),
-            "enp14s0",
+            "Ethernet",
             "Black Friday",
             LocalDate.of(2026,11,27)
     );

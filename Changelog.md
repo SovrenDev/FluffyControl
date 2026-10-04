@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.15.0]
+
+### Added
+- Program autodetects Ethernet or Wi-Fi network interface names
+
+### Changed
+- User now chooses between Ethernet or Wi-Fi when selecting which turns off at designated time.
+
 ## [0.14.0]
 
 ### Added
