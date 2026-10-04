@@ -26,10 +26,10 @@ By default, the program enforces the following schedule:
 Once started, make sure to set your correct network interface type in the config tab or manually in config.json:
 ```json
 {
-  "INTERFACE_TYPE": "WiFi"
+  "INTERFACE_TYPE": "Wi-Fi"
 }
 ```
-*You can find your active network interface name by running `nmcli device` in your terminal.*
+*You can find your active network interfaces by running `nmcli device` in your terminal.*
 
 ## Experimental features
 - **Days Countdown**: Counts the days left until a specified date.
