@@ -9,6 +9,9 @@ import java.net.SocketException;
 import java.util.Collections;
 import java.util.Enumeration;
 
+/**
+ * @author Sovren
+ */
 public class NetworkController {
     public static void turnOffNetwork(Gson gson) { runCommand("nmcli", "device", "disconnect", getInterface(gson));
     }

@@ -12,6 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import static fluffycontrol.FluffyControl.username;
 
+/**
+ * @author Sovren
+ */
 public class RestrictionManager {
     public static boolean isNight = false;
 

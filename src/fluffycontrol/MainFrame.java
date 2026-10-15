@@ -18,7 +18,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-
 /**
  * date: 2026-02-17
  * @author Sovren

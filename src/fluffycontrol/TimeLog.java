@@ -9,6 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * date: 2026-10-16
+ * @author Sovren
+ */
 public class TimeLog {
     private static String logName; // Store current file name temporarily
     public static Map<String, String> formattedLog = new LinkedHashMap<>();

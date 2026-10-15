@@ -6,13 +6,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * @author Sovren
+ */
 public class warnWindow extends JFrame{
     private Point mouseClickPoint; // Store initial mouse position on click
-    /*private final Font menuFont = new Font("Monospaced", Font.BOLD, 12);
-    private final Color backgroundColor = new Color(0,128,128);
-    private final  Color panelColor = new Color(174, 178, 188);
-    private final Color phosphorGreen = new Color(0, 255, 65);
-    */
 
     warnWindow() {
         createWindow("Sleep time\nPlease head to bed now. :3\n>"); // Change console text here
