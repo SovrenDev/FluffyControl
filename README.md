@@ -34,3 +34,4 @@ Once started, make sure to set your correct network interface type in the config
 ## Experimental features
 - **Days Countdown**: Counts the days left until a specified date.
 - **rngGame**: Games can be added or modified in the `rngGame.data` file, which is created when the user presses the Random Game button.
+- **TimeLog**: Logs the time the program is started and when it's closed.

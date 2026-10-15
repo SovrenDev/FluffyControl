@@ -18,7 +18,7 @@ import javax.swing.*;
  */
 public class FluffyControl {
     public static String username = System.getProperty("user.name");   
-    public static String version = "0.15.1-Linux";
+    public static String version = "0.16.0-Linux";
     public static boolean running = true;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -37,8 +37,6 @@ public class FluffyControl {
         }
 
         System.out.printf("%nQuitting program...%n");
-
-        RestrictionManager.scheduler.shutdown();
         try {
         Thread.sleep(50);
         } catch (InterruptedException e) {
@@ -56,6 +54,14 @@ public class FluffyControl {
         Config loadedConfig = Config.loadFile(gson, new File(Config.configFile),false);
         LocalTime bedtime = loadedConfig.getBedtime();
         LocalTime wakeUpTime = loadedConfig.getWakeup();
+
+        // Shutdown hook (Cleanup + log)
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            RestrictionManager.scheduler.shutdown();
+            TimeLog.logExit(gson);
+        }));
+
+        TimeLog.logStart(gson);
 
         // Makes sure internet is reconnected on launch if it's daytime
         if(!RestrictionManager.isNight && RestrictionManager.isBetween(LocalTime.now(), wakeUpTime, bedtime)){

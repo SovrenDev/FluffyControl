@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.16.0]
+### Added
+- TimeLog: Logs the time when program is started and later when its closed
+
+### Changed
+- Now uses addShutdownHook to do cleanup and log
+
 ## [0.15.1]
 ### Fixed
 - The network that was disabled is now enabled once wake-up time is reached
