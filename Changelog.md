@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.16.1]
+## Changed
+- Made LogColors a little bit easier to use
+
+### Removed
+- TimeLog
+
 ## [0.16.0]
 ### Added
 - TimeLog: Logs the time when program is started and later when its closed

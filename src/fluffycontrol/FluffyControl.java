@@ -1,5 +1,6 @@
 package fluffycontrol;
 
+import LogColors.LogColors;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,8 +32,8 @@ public class FluffyControl {
             switch(profile){
                 case "ins" -> openWebBrowserTab("https://www.youtube.com/watch?v=nBdcQGPLejk");
                 case "quit" -> running = false;
-                case "help" -> System.out.print(LogColors.BLUE + LogColors.BOLD +"Commands: ins, quit" + LogColors.RESET);
-                default -> System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid input, type help for commands" + LogColors.RESET);
+                case "help" -> LogColors.printInfo("Commands: ins, quit");
+                default -> LogColors.printWarn("Invalid input, type help for commands");
             }
         }
 
@@ -55,21 +56,17 @@ public class FluffyControl {
         LocalTime bedtime = loadedConfig.getBedtime();
         LocalTime wakeUpTime = loadedConfig.getWakeup();
 
-        // Shutdown hook (Cleanup + log)
+        // Shutdown hook (Cleanup)
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             RestrictionManager.scheduler.shutdown();
-            TimeLog.logExit(gson);
         }));
-
-        TimeLog.logStart(gson);
 
         // Makes sure internet is reconnected on launch if it's daytime
         if(!RestrictionManager.isNight && RestrictionManager.isBetween(LocalTime.now(), wakeUpTime, bedtime)){
-            System.out.printf("%s%s%nisNight set to true%s%n", LogColors.BLUE,LogColors.BOLD,LogColors.RESET);
+            LogColors.printInfo("isNight set to true");
             RestrictionManager.isNight = true;
         }
-
-        System.out.printf(LogColors.PURPLE + LogColors.BOLD + "Welcome to Fluffy Control version %s, %s!%n",version, username + LogColors.RESET);
+        LogColors.printPurple("Welcome to Fluffy Control version " + version + ", " + username + "!");
         // GUI Setup
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");

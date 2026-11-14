@@ -1,5 +1,6 @@
 package fluffycontrol;
 
+import LogColors.LogColors;
 import com.google.gson.Gson;
 
 import javax.swing.*;
@@ -143,11 +144,10 @@ public class ConfigWindow extends JFrame{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             try{
                 LocalTime validatedTime = LocalTime.parse(input, formatter);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Time set: " + validatedTime + LogColors.RESET);
-                //loadedConfig.setBedtime(validatedTime); // Temp save
+                LogColors.printInfo("Time set: " + validatedTime);
             } catch (DateTimeException ex) {
                 bedtimeField.setText("24-hour HH:mm format only!");
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid format. 24-Hour HH:mm format only"  + LogColors.RESET);
+                LogColors.printWarn("Invalid format. 24-Hour HH:mm format only");
             }
         });
 
@@ -167,11 +167,10 @@ public class ConfigWindow extends JFrame{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             try{
                 LocalTime validatedTime = LocalTime.parse(input, formatter);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Time set: " + validatedTime + LogColors.RESET);
-                //loadedConfig.setWakeup(validatedTime); // Temp save
+                LogColors.printInfo("Time set: " + validatedTime);
             } catch (DateTimeException ex) {
                 wakeupField.setText("24-hour HH:mm format only!");
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid format. 24-Hour HH:mm format only"  + LogColors.RESET);
+                LogColors.printWarn("Invalid format. 24-Hour HH:mm format only");
             }
         });
 
@@ -186,7 +185,7 @@ public class ConfigWindow extends JFrame{
             if(!e.getValueIsAdjusting()){
                 String strInterfaceType = interfaceTypeList.getSelectedValue();
                 if(strInterfaceType != null) {
-                    System.out.printf("%s%s%nSelected Interface: %s %s%n",LogColors.BLUE, LogColors.BOLD, strInterfaceType, LogColors.RESET);
+                    LogColors.printInfo("Selected Interface: " + strInterfaceType);
                     loadedConfig.setINTERFACE_TYPE(strInterfaceType); // Temp save
                 }
             }
@@ -215,10 +214,10 @@ public class ConfigWindow extends JFrame{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             try{
                 LocalDate validatedTime = LocalDate.parse(input, formatter);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Date set: " + validatedTime + LogColors.RESET);
+                LogColors.printInfo("Date set: " + validatedTime);
             } catch (DateTimeException ex) {
                 countdownField.setText("yyyy-MM-dd format only!");
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid format. yyyy-MM-dd format only"  + LogColors.RESET);
+                LogColors.printWarn("Invalid format. yyyy-MM-dd format only");
             }
         });
 
@@ -247,39 +246,39 @@ public class ConfigWindow extends JFrame{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             try{
                 LocalTime validatedTime = LocalTime.parse(input, formatter);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Time set: " + validatedTime + LogColors.RESET);
+                LogColors.printInfo("Time set: " + validatedTime);
                 loadedConfig.setBedtime(validatedTime);
             } catch (DateTimeException ex) {
                 bedtimeField.setText("24-hour HH:mm format only!");
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid format. 24-Hour HH:mm format only"  + LogColors.RESET);
+                LogColors.printWarn("Invalid format. 24-Hour HH:mm format only");
                 canSave = false;
             }
             String input2 = wakeupField.getText().trim();
             try{
                 LocalTime validatedTime = LocalTime.parse(input2, formatter);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Time set: " + validatedTime + LogColors.RESET);
+                LogColors.printInfo("Time set: " + validatedTime);
                 loadedConfig.setWakeup(validatedTime);
             } catch (DateTimeException ex) {
                 wakeupField.setText("24-hour HH:mm format only!");
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid format. 24-Hour HH:mm format only"  + LogColors.RESET);
+                LogColors.printWarn("Invalid format. 24-Hour HH:mm format only");
                 canSave = false;
             }
             String input3 = countdownField.getText().trim();
             formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             try {
                 LocalDate validatedTime = LocalDate.parse(input3, formatter);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Date set: " + validatedTime + LogColors.RESET);
+                LogColors.printInfo("Date set: " + validatedTime);
                 loadedConfig.setCountdownEnd(validatedTime);
             } catch (DateTimeException ex) {
                 countdownField.setText("yyyy-MM-dd format only!");
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Invalid format. yyyy-MM-dd format only"  + LogColors.RESET);
+                LogColors.printWarn("Invalid format. yyyy-MM-dd format only");
                 canSave = false;
             }
 
             if(countdownStr != null) {
                 String currentText = countdownMessageField.getText().trim();
                 loadedConfig.setCountdownMessage(currentText);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Countdown label set: " + currentText + LogColors.RESET);
+                LogColors.printInfo("Countdown label set: " + currentText);
             }
 
             // Actual save

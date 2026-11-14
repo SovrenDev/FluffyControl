@@ -1,5 +1,6 @@
 package fluffycontrol;
 
+import LogColors.LogColors;
 import com.google.gson.Gson;
 
 import java.awt.*;
@@ -138,7 +139,7 @@ public class MainFrame extends JFrame {
             countdownLabel.setText("  Days until " + message + ": ");
         } else {
             countdownLabel.setText("Error: Could not load configuration.");
-            System.err.println("[ERROR] Could not load configuration file");
+            LogColors.printError("Could not load configuration file");
         }
         JTextField countdownField = createTextField("Countdown here!");
         countdownField.setEditable(false);
@@ -146,7 +147,7 @@ public class MainFrame extends JFrame {
         if(loadedConfig != null) {
             countdownField.setText(dayCountdown(loadedConfig));
         } else {
-            System.err.println("[ERROR] Could not load configuration file");
+            LogColors.printError("Could not load configuration file");
         }
 
         formGroup.add(countdownLabel);
@@ -175,8 +176,7 @@ public class MainFrame extends JFrame {
             if(theConfigWindow == null){
                 theConfigWindow = new ConfigWindow(gson);
             } else {
-                System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] ConfigWindow already open" + LogColors.RESET);
-            }
+                LogColors.printWarn("ConfigWindow already open");}
         });
         buttonPanel.add(configButton);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -227,10 +227,10 @@ public class MainFrame extends JFrame {
                 days = String.valueOf(daysLeft);
             } else if (daysLeft == 0) {
                 days = String.valueOf(daysLeft);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Countdown ended"+ LogColors.RESET);
+                LogColors.printInfo("Countdown ended");
             } else {
                 days = String.valueOf(daysLeft);
-                System.out.println(LogColors.BLUE + LogColors.BOLD + "Countdown date has already passed" + LogColors.RESET);
+                LogColors.printInfo("Countdown date has already passed");
             }
         }
         return days;
@@ -370,7 +370,7 @@ public class MainFrame extends JFrame {
                 } else {
                     try (FileWriter file = new FileWriter("rngGame.data")) {
                         file.write(gson.toJson(rngDefault));
-                        System.out.println(LogColors.GREEN + LogColors.BOLD + "Successfully written defaults to " + "rngGame.data" + LogColors.RESET);
+                        LogColors.printSuccess("Successfully written defaults to rngGame.data");
                     } catch (IOException e) {
                         System.err.println("Failed to write JSON to file: " + e.getMessage());
                     }

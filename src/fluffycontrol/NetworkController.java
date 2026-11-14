@@ -1,5 +1,6 @@
 package fluffycontrol;
 
+import LogColors.LogColors;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -26,7 +27,7 @@ public class NetworkController {
             int exitCode = process.waitFor();
 
             if (exitCode == 0) {
-                System.out.printf("%s%s%nNetwork Command successful.%s%n",LogColors.BLUE, LogColors.BOLD, LogColors.RESET);
+                LogColors.printSuccess("Network Command successful");
                 return;
             }
 
@@ -55,7 +56,7 @@ public class NetworkController {
                 String type = loadedConfig.getINTERFACE_TYPE();
                 if(type != null && type.equalsIgnoreCase("ethernet")){
                     if (name.startsWith("en") || name.startsWith("eth")) {
-                        System.out.printf("%s%s%nEthernet: %s%n%s",LogColors.BLUE, LogColors.BOLD, name, LogColors.RESET);
+                        LogColors.printInfo("Ethernet: " + name);
                         // Save to file
                         loadedConfig.setDisabledInterface(name);
                         String jsonOutput = gson.toJson(loadedConfig);
@@ -64,7 +65,7 @@ public class NetworkController {
                     }
                 } else if(type != null && type.equalsIgnoreCase("wi-fi")){
                    if (name.startsWith("wl")) {
-                       System.out.printf("%s%s%nWi-Fi: %s%n%s",LogColors.BLUE, LogColors.BOLD, name, LogColors.RESET);
+                       LogColors.printInfo("Wi-Fi: " + name);
                        // Save to file
                        loadedConfig.setDisabledInterface(name);
                        String jsonOutput = gson.toJson(loadedConfig);
@@ -72,7 +73,7 @@ public class NetworkController {
                        return name;
                    }
                 } else {
-                    System.out.printf("%s%s%n[WARN] %s is not a valid type. Please enter Wi-Fi or Ethernet%n%s",LogColors.YELLOW, LogColors.BOLD, type,  LogColors.RESET);
+                    LogColors.printWarn(type + " is not a valid type. Please enter Wi-Fi or Ethernet");
                 }
             }
         } catch (SocketException e) {
@@ -85,7 +86,7 @@ public class NetworkController {
     public static String getDisabledInterface(Gson gson){
         Config loadedConfig = Config.loadFile(gson, new File(Config.configFile), false);
         String name = loadedConfig.getDisabledInterface();
-        if(name == null) System.out.printf("%s%s%n[WARN] Disabled Interface is null %s%n",LogColors.YELLOW, LogColors.BOLD,  LogColors.RESET);
+        if(name == null) LogColors.printWarn("Disabled Interface is null");
         return name;
     }
 }

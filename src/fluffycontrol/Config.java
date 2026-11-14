@@ -1,5 +1,6 @@
 package fluffycontrol;
 
+import LogColors.LogColors;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -95,7 +96,7 @@ public class Config {
         try (FileReader reader = new FileReader(fileName)) {
             config = gson.fromJson(reader, Config.class);
             if(debug) {
-                System.out.println(LogColors.GREEN + LogColors.BOLD + "Successfully read config file" + LogColors.RESET);
+                LogColors.printSuccess("Successfully read config file");
                 System.out.println("DEBUG: " + config);
             }
         } catch (IOException e) {
@@ -107,7 +108,7 @@ public class Config {
     public static void writeToFile(File fileName, String jsonOutput) {
         try (FileWriter file = new FileWriter(fileName)) {
             file.write(jsonOutput);
-            System.out.println(LogColors.GREEN + LogColors.BOLD + "Successfully written JSON object to " + fileName + LogColors.RESET);
+            LogColors.printSuccess("Successfully written JSON object to " + fileName);
         } catch (IOException e) {
             System.err.println("Failed to write JSON to file: " + e.getMessage());
         }
@@ -127,11 +128,10 @@ public class Config {
     public static void doesConfigExist(String jsonOutput) {
         File fileName = new File(Config.configFile);
         if (fileName.isFile()) {
-            System.out.println(LogColors.BLUE + LogColors.BOLD + "Config file found. Loading configuration..." + LogColors.RESET);
-            //System.out.println("Default Config: " + Config.defaultConfig);
+            LogColors.printInfo("Config file found. Loading configuration...");
         } else {
             // Write defaults
-            System.out.println(LogColors.YELLOW + LogColors.BOLD + "[WARN] Config file not found. Creating new one..." + LogColors.RESET);
+            LogColors.printWarn("Config file not found. Creating new one...");
             Config.writeToFile(fileName, jsonOutput);
         }
     }
